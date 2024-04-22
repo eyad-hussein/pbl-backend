@@ -18,7 +18,7 @@ class GANService
     {
         $body = $this->createRequest($data);
 
-        $response = $this->client->post($this->flaskApiUrl, [
+        $response = $this->client->post($this->flaskApiUrl . '/task', [
             'headers' => ['Content-Type' => 'application/json'],
             'body' => $body,
         ]);
