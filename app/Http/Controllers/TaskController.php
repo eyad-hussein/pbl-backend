@@ -14,13 +14,12 @@ class TaskController extends Controller
         $this->ganService = $ganService;
     }
 
-    public function execute(Request $request, $task, $model)
+    public function execute(Request $request, $task)
     {
         // dd($request);
         $data = [
             'image' => $request->file('image'),
             'task' => $task,
-            'model' => $model
         ];
         // dd($data);
 

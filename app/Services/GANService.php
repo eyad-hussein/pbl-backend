@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,28 +22,43 @@ class GANService
     {
         $image = $data["image"];
         $task = $data["task"];
-        $model = $data["model"];
 
         $directory = 'public/temp/input';
         if (!Storage::exists($directory)) {
             Storage::makeDirectory($directory);
         }
 
-        $path = $image->storeAs($directory, $image->getClientOriginalName());
 
-        $endpoint = env('FLASK_API_URL') . '/' . $task . '/' . $model;
-        dd($endpoint);
+        $fileContents = file_get_contents($image);
+        $fileName = $image->getClientOriginalName();
 
-        $response = Http::post($endpoint, [
-            'path' => $path
-        ]);
+        $path = '/home/eyad/Downloads/input/' . $fileName;
+
+        file_put_contents($path, $fileContents);
+
+        $endpoint = env('FLASK_API_URL') . '/' . $task;
+
+        try {
+            $response = Http::post($endpoint, [
+                'path' => $path
+            ]);
 
 
-        if ($response->successful()) {
-            return $response->json();
-        } else {
-            return null;
+        } catch (Exception $e) {
+            return response("jhjhhh");
         }
 
+
+        // // Storage::delete($path);
+        return response([
+            "message" => "success"
+        ]);
+        // if ($response->successful()) {
+        //     return response(
+        //         ["path" => $fileName]
+        //     );
+        // } else {
+        //     return "ERRROORR";
+        // }
     }
 }

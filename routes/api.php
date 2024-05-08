@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/{task}/{model}', [TaskController::class, 'execute']);
+Route::post('/{task}', [TaskController::class, 'execute']);

@@ -15,20 +15,13 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
+    'paths' => ['api/*'],
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your application uses
+    'allowed_origins' => ['http://localhost:3000/'], // Add the origin (domain) of your React.js frontend
     'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
+    'allowed_headers' => ['Content-Type', 'Authorization'], // Adjust as needed
     'exposed_headers' => [],
-
     'max_age' => 0,
-
     'supports_credentials' => false,
 
 ];
