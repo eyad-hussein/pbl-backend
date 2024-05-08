@@ -23,38 +23,29 @@ class GANService
         $image = $data["image"];
         $task = $data["task"];
 
-        $directory = 'public/temp/input';
-        if (!Storage::exists($directory)) {
-            Storage::makeDirectory($directory);
-        }
 
-
-        $fileContents = file_get_contents($image);
-        $fileName = $image->getClientOriginalName();
-
-        $path = '/home/eyad/Downloads/input/' . $fileName;
-
-        file_put_contents($path, $fileContents);
-
+        $image = base64_encode(file_get_contents($data['image']));
         $endpoint = env('FLASK_API_URL') . '/' . $task;
 
         try {
-            Http::withHeaders([
+
+            $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Accept' => '*/*',
                 'Accept-Encoding' => 'gzip, deflate, br',
                 'Connection' => 'keep-alive',
             ])->post($endpoint, [
-                        'path' => $path
+                        'image' => $image,
                     ]);
+
+
+            // Return the decoded image as a response
+            return response([
+                "processed_image" => $response["processed_image"]
+            ]);
         } catch (Exception $e) {
             return response($e->getMessage());
         }
-
-
-        return response([
-            "message" => "success"
-        ]);
 
     }
 }
