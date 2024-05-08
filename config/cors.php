@@ -15,13 +15,13 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
-    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'], // Add the HTTP methods your application uses
-    'allowed_origins' => ['http://localhost:3000/'], // Add the origin (domain) of your React.js frontend
+    'paths' => ['*'],
+    'allowed_methods' => ['*'],
+    'allowed_origins' => [env("FRONT_END_APP_URL"), "http://localhost:3000"],
     'allowed_origins_patterns' => [],
-    'allowed_headers' => ['Content-Type', 'Authorization'], // Adjust as needed
+    'allowed_headers' => ['*'],
     'exposed_headers' => [],
-    'max_age' => 0,
-    'supports_credentials' => false,
+    'max_age' => 100,
+    'supports_credentials' => true,
 
 ];

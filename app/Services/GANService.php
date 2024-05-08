@@ -39,26 +39,22 @@ class GANService
         $endpoint = env('FLASK_API_URL') . '/' . $task;
 
         try {
-            $response = Http::post($endpoint, [
-                'path' => $path
-            ]);
-
-
+            Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Accept' => '*/*',
+                'Accept-Encoding' => 'gzip, deflate, br',
+                'Connection' => 'keep-alive',
+            ])->post($endpoint, [
+                        'path' => $path
+                    ]);
         } catch (Exception $e) {
-            return response("jhjhhh");
+            return response($e->getMessage());
         }
 
 
-        // // Storage::delete($path);
         return response([
             "message" => "success"
         ]);
-        // if ($response->successful()) {
-        //     return response(
-        //         ["path" => $fileName]
-        //     );
-        // } else {
-        //     return "ERRROORR";
-        // }
+
     }
 }

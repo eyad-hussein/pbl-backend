@@ -16,18 +16,12 @@ class TaskController extends Controller
 
     public function execute(Request $request, $task)
     {
-        // dd($request);
         $data = [
             'image' => $request->file('image'),
             'task' => $task,
         ];
-        // dd($data);
 
         return $this->ganService->execute($data);
     }
 
-    public function test(Request $request)
-    {
-        dd($request);
-    }
 }
