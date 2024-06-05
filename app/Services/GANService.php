@@ -4,10 +4,7 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
-
-use \GuzzleHttp\Client;
 
 class GANService
 {
@@ -39,12 +36,11 @@ class GANService
                     ]);
 
 
-            // Return the decoded image as a response
             return response([
                 "processed_image" => $response["processed_image"]
             ]);
         } catch (Exception $e) {
-            return response($e->getMessage());
+            return $e->getMessage();
         }
 
     }
